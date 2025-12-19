@@ -1,7 +1,7 @@
 import { useOAuthConfig } from '@/hooks/oauth'
 import { useNotifications } from '@/providers/NotificationsProvider'
 import { useSession } from '@/providers/SessionProvider'
-import { ExtensionStorage } from '@bacons/apple-targets'
+import { clearWidgetValues } from '@/utils/widget-storage'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useQueryClient } from '@tanstack/react-query'
 import { revokeAsync } from 'expo-auth-session'
@@ -14,7 +14,6 @@ import {
   useGetNotificationRecipient,
 } from './polar/notifications'
 
-const widgetStorage = new ExtensionStorage('group.com.polarsource.Polar')
 
 export const useLogout = () => {
   const { session, setSession } = useSession()
@@ -33,24 +32,22 @@ export const useLogout = () => {
       if (notificationRecipient?.id) {
         deleteNotificationRecipient
           .mutateAsync(notificationRecipient.id)
-          .catch(() => {})
+          .catch(() => { })
       }
 
       if (session) {
         revokeAsync(
           { token: session, clientId: CLIENT_ID },
           { revocationEndpoint: discovery.revocationEndpoint },
-        ).catch(() => {})
+        ).catch(() => { })
       }
 
-      Notifications.unregisterForNotificationsAsync().catch(() => {})
-      WebBrowser.coolDownAsync().catch(() => {})
+      Notifications.unregisterForNotificationsAsync().catch(() => { })
+      WebBrowser.coolDownAsync().catch(() => { })
       queryClient.clear()
       await AsyncStorage.clear()
 
-      widgetStorage.set('widget_api_token', '')
-      widgetStorage.set('widget_organization_id', '')
-      widgetStorage.set('widget_organization_name', '')
+      clearWidgetValues()
 
       setSession(null)
       router.replace('/')

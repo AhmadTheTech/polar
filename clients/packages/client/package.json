@@ -15,7 +15,7 @@
   "scripts": {
     "generate": "openapi-typescript http://127.0.0.1:8000/openapi.json --enum-values -o ./src/v1.ts && prettier --write ./src && pnpm run build",
     "test:ts": "tsc --noEmit",
-    "build": "rm -rf dist/ && tsup",
+    "build": "node -e \"try{require('fs').rmSync('dist',{recursive:true,force:true})}catch(e){}\" && pnpm exec tsup",
     "lint": "prettier -c ."
   },
   "exports": {

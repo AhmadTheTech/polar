@@ -1,7 +1,7 @@
 import { Box } from '@/components/Shared/Box'
 import { useOrganizations } from '@/hooks/polar/organizations'
 import { useStorageState } from '@/hooks/storage'
-import { ExtensionStorage } from '@bacons/apple-targets'
+import { setWidgetValue } from '@/utils/widget-storage'
 import { schemas } from '@polar-sh/client'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Redirect, usePathname } from 'expo-router'
@@ -9,7 +9,6 @@ import { createContext, PropsWithChildren, useEffect, useMemo } from 'react'
 import { ActivityIndicator } from 'react-native'
 import { useSession } from './SessionProvider'
 
-const storage = new ExtensionStorage('group.com.polarsource.Polar')
 
 export interface OrganizationContextValue {
   isLoading: boolean
@@ -71,8 +70,8 @@ export function PolarOrganizationProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if (organization) {
-      storage.set('widget_organization_id', organization.id)
-      storage.set('widget_organization_name', organization.name)
+      setWidgetValue('widget_organization_id', organization.id)
+      setWidgetValue('widget_organization_name', organization.name)
     }
   }, [organization])
 

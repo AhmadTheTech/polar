@@ -1,13 +1,11 @@
 import { useStorageState } from '@/hooks/storage'
-import { ExtensionStorage } from '@bacons/apple-targets'
+import { setWidgetValue } from '@/utils/widget-storage'
 import {
   createContext,
   useContext,
   useEffect,
   type PropsWithChildren,
 } from 'react'
-
-const storage = new ExtensionStorage('group.com.polarsource.Polar')
 
 const AuthContext = createContext<{
   setSession: (session: string | null) => void
@@ -36,7 +34,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if (session) {
-      storage.set('widget_api_token', session)
+      setWidgetValue('widget_api_token', session)
     }
   }, [session])
 

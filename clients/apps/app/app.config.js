@@ -50,7 +50,7 @@ module.exports = {
     scheme: 'polar',
     userInterfaceStyle: 'dark',
     newArchEnabled: true,
-    owner: 'polar-sh',
+    owner: 'ahmadwebcreator',
     ios: {
       appleTeamId: '55U3YA3QTA',
       supportsTablet: false,
@@ -95,7 +95,10 @@ module.exports = {
       output: 'static',
       favicon: './assets/images/favicon.png',
     },
-    plugins,
+    plugins: [
+      ...plugins,
+      './targets/android-widget/plugin.js'
+    ],
     experiments: {
       typedRoutes: true,
     },
@@ -105,14 +108,14 @@ module.exports = {
         root: './app',
       },
       eas: {
-        projectId: '0c79977b-c070-4416-8878-d8b8febe2e25',
+        projectId: '5f3a613d-a056-4aa5-953b-9e77f375ae25',
       },
     },
     runtimeVersion: {
       policy: 'appVersion',
     },
     updates: {
-      url: 'https://u.expo.dev/0c79977b-c070-4416-8878-d8b8febe2e25',
+      url: 'https://u.expo.dev/5f3a613d-a056-4aa5-953b-9e77f375ae25',
     },
   },
 }
